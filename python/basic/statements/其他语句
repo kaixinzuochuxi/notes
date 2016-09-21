@@ -1,0 +1,13 @@
+##其他语句
+###pass--占位符
+###del删除
+仅删除名称，内存由垃圾收集机制回收，若有多变量指向同一内存则其余变量仍存在。
+###对字符串执行/求值
+
+	exec 'string'
+	eval('string')	#会返回结果值
+安全机制：增加字典当做命名空间，使之不会干扰正确代码。
+	
+	scope={}
+	exec 'string' in scope
+	eval('string',scope)
