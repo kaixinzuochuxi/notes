@@ -29,7 +29,9 @@ Dual Frame Motion Compensation With Uneven Quality Assignment
 
 
 
-
+---
+---
+---
 #264新标准中QP与stepsize关系变化应对及CM,RC,QP鸡蛋问题解决
 Rate-distortion analysis for H.264/AVC video coding and its application to rate control
 
@@ -53,6 +55,9 @@ RD model，量化参数，量化步长，buffer
 
 	迭代两次，第一次，设定QP，根据MB信息得到最优CM,RC，然后根据CM,RC更新QP，两次的RD cost比较，如果后者高，根据阈值选定部分MB再次更新QP
 
+---
+---
+---
 #SVC中取舍STAR组合问题，rate和perceptual quality模型构建
 modeling of rate and perceptual quality of compressed video as functions of frame rate and quantization stepsize and its applications   
 
@@ -104,6 +109,9 @@ quality：scalable
 	对不稳定序列，使用滑动窗口或scene change detection改进内容变化场景下的取舍
 
 
+---
+---
+---
 #二次多项式RD model的视频编码
 a new rate control scheme using quadratic rate distortion model--CSVT1997
 ##场景，问题，对象，变量，约束
@@ -131,7 +139,9 @@ bit allocation scheme：
 	bit rate fluctuation
 
 
-
+---
+---
+---
 #log关系的frame-level RD-model视频编码
 a rate-quantization model for mpeg encoders--ICIP1997
 ##场景，问题，对象，变量，约束
@@ -154,7 +164,9 @@ frame-level
 
 
 
-
+---
+---
+---
 #基于小波变换，适应JPEG2000的MC编码模型
 A model-based motion compensated video coder with JPEG2000 compatibility--ICIP2004
 ##场景，问题，对象，变量，约束
@@ -178,7 +190,9 @@ A model-based motion compensated video coder with JPEG2000 compatibility--ICIP20
 。。。
 
 
-
+---
+---
+---
 #低延时通讯中DCT编码器改进
 rate control in dct video coding for low-delay communications--CSVT1999
 ##场景，问题，对象，变量，约束
@@ -213,7 +227,9 @@ bit rate低，带宽浪费
 
 
 
-
+---
+---
+---
 #视觉跟踪数据集的构建
 Eye-tracking database for a set of standard video sequences
 
