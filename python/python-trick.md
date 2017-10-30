@@ -64,7 +64,14 @@ numpy数组去掉一行/一列
 
 
 
+均值滤波边界条件的判别：
 
+	neighbors = [
+                    M[_x][_y]
+                    for _x in (x-1, x, x+1)
+                    for _y in (y-1, y, y+1)
+                    if 0 <= _x < x_len and 0 <= _y < y_len
+                ]
 
 
 
