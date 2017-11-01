@@ -160,13 +160,70 @@ referencing structures
         sub-bitstream extraction
             done by discarding all NAL units which have a temporal ID higher 
             than a target temporal ID value called HighestTid
+            location：path or encoder
+            application: rate adaptation
 
 ###2.2 VCL NAL Unit Types
 
+性质：
+
+    All VCL NAL units of the same access unit must have the same value of NAL unit type
+    -that value defines the type of the access unit and its coded picture
+
+
+classes of pictures
+
+    intra random access point (IRAP) pictures        
+    leading pictures
+    trailing pictures
+
 ####2.2.1 IRAP Pictures
+NAL unit types 16–23
 
+    Broken link access-BLA
+    Instantaneous decoding refresh-IDR
+    Clean random access-CRA
+    reserved
+不依赖其他任何图片
+
+    belong to temporal sub-layer 0
+    coded without using the content of any other pictures as reference data--intra
+作用：
+
+    从bitstream何处开始解码，前面的数据可以丢掉
+        bs第一张图片必然是IRAP
+    快进快退，temporal position seeking in video content
+    bitstream switching or splicing
+分布：
+
+    视频储存回放，均匀分布，使得再bitstream的random access points频率保持相似
+    实时通信中，随机访问功能不重要，IRAP需大量bits，使用少，或反馈信号支出视频数据损坏需要刷新
 ####2.2.2 Leading and Trailing Pictures
+leading pictures
 
+    描述
+        picture that follows a particular IRAP picture in decoding order and precedes it in output order
+    相关性    
+        associated with the closest previous IRAP picture
+
+
+trailing pictures
+
+    描述
+        picture that follows a particular IRAP picture in both decoding order and output order
+        NAL unit types 0–5
+    相关性依赖性
+        associated with the closest previous IRAP picture
+        only depend on the associated IRAP and other trailing pictures of the same IRAP
+
+    解码中顺序要求
+        IRAP
+        leading
+        trailing
+    type
+        temporal sub-layer access (TSA) pictures
+        step-wise temporal sub-layer access (STSA) pictures
+        ordinary trailing pictures (TRAIL)
 ####2.2.3 Temporal Sub-layer Access (TSA) Pictures
 
 ####2.2.4 Step-wise Temporal Sub-layer Access (STSA) Pictures
