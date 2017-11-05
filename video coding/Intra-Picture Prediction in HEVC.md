@@ -150,7 +150,12 @@ post-filtering：
 
 #### 3.1.1 Angle Definitions
 
+总量：33
+间隔，单位：1/32的准确性
+问题分布：vertical，horizontal的问题更多
+解决：以vertical，horizontal为基础，加上小的位移参数displacement parameters，常见pattern参数小，不常见参数大，方向变为对角型
 
+![](Fig_4_5_Angle_Definitions.png)
 #### 3.1.2 Reference Row Extension for the Negative Prediction Directions
 
 
