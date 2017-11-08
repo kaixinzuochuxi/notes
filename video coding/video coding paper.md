@@ -319,3 +319,15 @@ RD模型估计中，两种方式各有缺点：
 构建线性模型
 
 针对视频中的物体编码(h264)或对宏块进行分类
+
+
+----
+# 压缩域，基于HEVC编码后的特征，利用SVM进行显著性检测
+learning to detect video saliency with hevc features--TIP-2017
+
+## 贡献：
+eye-tracking dataset:https://github.com/remega/video_database
+分析，选取特征
+SVM分类
+
+

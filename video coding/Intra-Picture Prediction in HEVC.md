@@ -164,16 +164,75 @@ post-filtering：
 
 ### 3.2 DC Prediction
 
+方法：
+预测值为一个常数，reference sample的一个均值
 
+后续处理：
+light filter：soften the left and above edges of the block
 ### 3.3 Planar Prediction
+
+angular的缺点：
+平滑地区产生等高线
+
+方法：
+* 计算horizontal prediction和vertical prediction
+* 平均
+
+
+计算方式：
+$$p[x][y]=(p_h[x][y]+p_v[x][y]+N)>>(log_2(N)+1)$$
+右移，除法变为平均！
+horizontal prediction $p_h[x][y]$ :  $p_h[x][y]=(N-1-x)*p[-1][y]+(x+1)*p[N][-1]$
+vertical prediction $p_v[x][y]$ : $p_v[x][y]=(N-1-y)*p[x][-1]+(y+1)*p[-1][N]$
+
+
 
 
 ### 3.4 Post-processing for Predicted Samples
 
+* 问题，场景：
 
+部分情况下prediction modes can generate discontinuities for the predicted sample values on the boundaries of the prediction blocks
+
+
+* 分布
+    * boundaries of the prediction blocks
+    * DC prediction
+        * occur on both top and left boundary of the block--全部为1个值，中间不会有
+    * directly vertical angular predictions
+        *  left boundary of the block
+        * leftmost column of predicted samples replicate the value of the leftmost reference sample above the block.
+    * directly horizontal angular predictions
+        *  top edge of the block
+    
+* 解决
+    * 边界的预测值被滤波后的值替换
+    * 适用情况：
+        * 上述三种modes
+        * block size is smaller than 32 * 32
+    * 次要目的
+        balance between coding efficiency and complexity
+    * 操作对象
+        luma component， for chroma components tends to be very smooth
+    
+    * 具体做法
+        * exactly vertical direction
+            $p[0][y]=p[0][y]+((p[-1][y]-p[-1][-1])>>1)$ for $y=0...N-1$
+        * exactly horizontal direction
+        * DC prediction
+            * $p[0][0]$
+                three-tap [1 2 1]/4 smoothing filter
+                $p[0][0]=(p[-1][0]+2*dcVal+p[0][-1]+2)>>2$
+            * other
+                two-tap [3 1]/4 smoothing filter
+                $p[x][0]=(p[x][-1]+3*dcVal+2)>>2$ for $x=1..N-1$
+                $p[0][y]=(p[-1][y]+3*dcVal+2)>>2$ for $y=1..N-1$
 ## 4 Intra Mode Coding
 
+分类：按操作对象
 
+    luma
+    chorma
 ### 4.1 Prediction of Luma Intra Mode
 
 
