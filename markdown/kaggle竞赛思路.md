@@ -456,3 +456,19 @@ group
     Y_pred = perceptron.predict(X_test)
     acc_perceptron = round(perceptron.score(X_train, Y_train) * 100, 2)
     acc_perceptron
+
+
+trick：
+
+    pd.corr(),不算NA/null
+    pd.hist
+
+有多少缺失值
+
+    null_columns=titanic.columns[titanic.isnull().any()]
+    titanic.isnull().sum()
+
+
+缺失值的相同与不同
+
+    从其他数据中找到相似性

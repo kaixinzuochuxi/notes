@@ -330,4 +330,21 @@ eye-tracking dataset:https://github.com/remega/video_database
 分析，选取特征
 SVM分类
 
+---
+# 显著性编码
+saliency-aware video compression--TIP2014
+
+## 问题场景，对象变量，
+
+* Lossy image and video encoders are known to produce undesirable compression artifacts at low bit rates.[1][2]
+	* Blocking artifacts are the most common form of compression artifacts
+	* 普通滤波不能处理：仅能处理边界，但此处为structured high-frequency，不在边界上
+
+* ROI编码：
+	* 描述：用bitrate区别对待region
+	* 依据：HVS特点，只注意到$2^\circ-5^\circ$
+	* 问题：非显著性区域bitrate过低产生visible coding artifacts，吸引注意力变为显著性区域（但是不一定会被注意到）
+		* 如何识别？[8],[9]
+		* 如何解决，减少？
+
 

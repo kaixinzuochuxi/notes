@@ -231,8 +231,8 @@ vertical prediction $p_v[x][y]$ : $p_v[x][y]=(N-1-y)*p[x][-1]+(y+1)*p[-1][N]$
 
 分类：按操作对象
 
-    luma
-    chorma
+    luma--
+    chorma--
 ### 4.1 Prediction of Luma Intra Mode
 
 
