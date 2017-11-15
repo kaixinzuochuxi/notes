@@ -231,17 +231,66 @@ vertical prediction $p_v[x][y]$ : $p_v[x][y]=(N-1-y)*p[x][-1]+(y+1)*p[-1][N]$
 
 分类：按操作对象
 
-    luma--
-    chorma--
+    luma--3种可选模式
+    chorma--derived mode
+    语法设计
+    
+* 变量对象
+    * $MPM$
+    * mode number 
+        * luma
+        * chorma
+    * $SMPM$--sorted
+    * $prev\_intra\_luma\_pred\_flag$,实际结果是否在$SMPM$中
+    * $mpm\_idx$,若在其中，索引
+    * $rem\_intra\_luma\_pred\_flag$,不在其中，指出为多少，一共32种，依据有序性进行计算
 ### 4.1 Prediction of Luma Intra Mode
 
+基于35种总可能情况，周围情况决定3种最可能情况
+* 周围：左(A)，上(B)
 
+过程：
+* A, B不为intra coded？coded with pulse code modulation (PCM) mode？--越界B被视为DC mode
+    * DC mode
+    * A!=B：
+        * most probable modes $MPM[0]=A$ and $MPM[1]=B$,
+            * If neither of A or B is planar mode, $MPM[2]$ is set to planar mode
+            * Otherwise, if neither of A or B is DC mode, $MPM[2]$ is set to DC mode
+            * Otherwise (one of the two most probable modes is planar and the other is DC), $MPM[2]$ is set equal to angular mode 26 (directly vertical).
+    * A==B：
+        * 均不是angular modes--DC, planar
+            * 1,2,3==planar mode, DC mode and angular mode 26
+        * 是angular modes：
+            * $MPM[0]=A$
+            * $MPM[1]=2+((A-2-1+32)\%32)$
+            * $MPM[2]=2+((A-2+1)\%32)$
+
+* 根据mode number，升序排序，形成有序集合
+* current intra prediction mode==$MPM[i]$ ?
+    * only the index in the set is transmitted to the decoder
+    * a 5-bit CABAC bypassed codeword is used to specify the selected mode outside of the set of most probable modes as the number of modes outside of the set is equal to 32；mode number设为32，另外传输
 ### 4.2 Derived Mode for Chroma Intra Prediction
 
+* 引入依据：
+    * 颜色结构跟随亮度结构--structures in the chroma signal follow those of the luma
+    * 增加颜色方向性，使得颜色和亮度的编码模式一致
+* 总共编码模式：
+    * planar--INTRA_PLANAR
+    * angular 26 (directly vertical)--INTRA_ANGULAR[26]
+    * angular 10 (directly horizontal)--INTRA_ANGULAR[10]
+    * DC--INTRA_DC
+    * derived mode--INTRA_DERIVED 
+* 初始模式和最终模式
+    * 依据derived mode是否等于初始模式判断最终模式
+        * 不等：保持初始模式
+        * 等于：全部变为 INTRA_ANGULAR[34]
+        
+![Table 4.4](Table_4.4.png)
 
 ### 4.3 Syntax Design for Intra Mode Coding
 
-
+具体实现，参见前面变量处
+注意计算chorma mode时，如果当前$rem\_intra\_luma\_pred\_flag$的值大于或等于$SMPM[i]$那么需要额外+1，最多+3
 ## 5 Encoding Algorithms
 
 
